@@ -10,9 +10,12 @@ namespace CppInterfaceTest.UnitTest
         [TestMethod]
         public void AddTest()
         {
-            ICalculator calculator = CppInstanceFactory.CreateCalculator();
-            Assert.IsNotNull(calculator);
-            Assert.AreEqual(5, calculator.Add(1, 4));
+            using (CppInterface<ICalculator> calculatorWrapper = CppInstanceFactory<ICalculator>.CreateInstance())
+            {
+                ICalculator calculator = calculatorWrapper.Object;
+                Assert.IsNotNull(calculator);
+                Assert.AreEqual(5, calculator.Add(1, 4));
+            }
         }
     }
 }

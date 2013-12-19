@@ -1,7 +1,7 @@
 #pragma once
 #include "unknwnbase.h"
 
-extern const wchar_t *Calculator_IID;
+extern const GUID IID_Calculator;
 
 class ICalculator : public IUnknown
 {
@@ -12,7 +12,7 @@ public:
 class Calculator : ICalculator
 {
 public:
-	Calculator() {};
+	Calculator() { this->refCount = 0; };
 	virtual ~Calculator() {};
 
     virtual int __stdcall Add( int op1, int op2);
@@ -21,6 +21,6 @@ public:
     ULONG __stdcall Release();
     HRESULT __stdcall QueryInterface(const IID& riid,void **ppvObject);
 protected:
-    int refCount;
+    unsigned int refCount;
 };
 

@@ -6,22 +6,24 @@ using System.Text;
 
 namespace CppInterfaceTest
 {
-    public class CppInstanceFactory
+    public class CppInstanceFactory<T> where T : class
     {
-        public static ICalculator CreateCalculator()
+        public static CppInterface<T> CreateInstance()
         {
-            IntPtr instance = NativeMethods.CreateInstance("F3C4F98C-BBDC-4B2E-B67A-12E1475109FE");
+            Guid guid = typeof(T).GUID;
+            IntPtr instancePtr = NativeMethods.CreateInstance(guid);
 
-            if (instance == IntPtr.Zero) 
+            if (instancePtr == IntPtr.Zero) 
                 return null;
 
-            return Marshal.GetObjectForIUnknown(instance) as ICalculator;
+            return new CppInterface<T>( Marshal.GetObjectForIUnknown(instancePtr) as T);
         }
 
-        class NativeMethods
-        {
-            [DllImport("CppInterface.dll", CharSet = CharSet.Unicode)]
-            public extern static IntPtr CreateInstance(string instanceId);
-        }
+    }
+
+    public class NativeMethods
+    {
+        [DllImport("CppInterface.dll", CharSet = CharSet.Unicode)]
+        public extern static IntPtr CreateInstance(Guid guid);
     }
 }
