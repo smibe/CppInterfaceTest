@@ -12,5 +12,8 @@ namespace CppInterfaceTest
     {
         [PreserveSig]
         int Add(int op1, int op2);
+
+        [PreserveSig]
+        string GetText(int op1, int op2);
     }
 }
