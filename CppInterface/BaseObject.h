@@ -23,7 +23,7 @@ public:
 		if (riid != IID_IUnknown && riid != *pIID)
 		{
 			*ppvObject = nullptr;
-			return S_FALSE;
+			return E_NOINTERFACE;
 		}
 
 		*ppvObject=this;
